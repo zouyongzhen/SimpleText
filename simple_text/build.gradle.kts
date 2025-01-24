@@ -29,7 +29,7 @@ dependencies {
     implementation(libs.material)
 }
 group = "com.github.zouyongzhen"
-version = "1.0-alpha"
+version = "1.0-alpha5"
 afterEvaluate {
     publishing {
         publications {
