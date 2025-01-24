@@ -14,9 +14,8 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.TouchDelegate
 import android.view.View
+import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.annotation.DrawableRes
-import androidx.constraintlayout.widget.ConstraintLayout
 import zyz.hero.simple_text.R
 import zyz.hero.simple_text.utils.TextViewTouchListener
 import zyz.hero.simple_text.utils.dp
@@ -33,7 +32,7 @@ import kotlin.math.min
 
 open class FoldText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
-) : ConstraintLayout(context, attrs), View.OnClickListener {
+) : RelativeLayout(context, attrs) {
     companion object {
         const val ZERO_WIDTH_CHAR = '\u200B'
 
@@ -60,7 +59,6 @@ open class FoldText @JvmOverloads constructor(
     private var onButtonClick: ((FoldText) -> Unit)? = null
     protected var textView: TextView
     private var button: TextView
-    private var rootView: ConstraintLayout
     private var spannableContentString: SpannableStringBuilder = SpannableStringBuilder()
     var originalContentString: CharSequence? = ""
     private var animator: ValueAnimator? = null
@@ -147,29 +145,19 @@ open class FoldText @JvmOverloads constructor(
         }
         button.setTextSize(TypedValue.COMPLEX_UNIT_PX, buttonTextSize)
         button.setTextColor(buttonTextColor)
-        button.setOnClickListener(this)
-        rootView = findViewById(R.id.root)
-        rootView.setOnClickListener(this)
-    }
+        button.setOnClickListener {
+            when (showMode) {
+                SHOW_MODE_FOLD_WITH_BUTTON_TEXT, SHOW_MODE_FOLD_WITH_BUTTON_ICON -> {
+                    toggle()
+                }
 
-
-    override fun onClick(v: View) {
-        when (v.id) {
-            R.id.root -> {
-                onLayoutClick?.invoke(this)
-            }
-
-            R.id.button -> {
-                when (showMode) {
-                    SHOW_MODE_FOLD_WITH_BUTTON_TEXT, SHOW_MODE_FOLD_WITH_BUTTON_ICON -> {
-                        toggle()
-                    }
-
-                    else -> {
-                        onButtonClick?.invoke(this)
-                    }
+                else -> {
+                    onButtonClick?.invoke(this)
                 }
             }
+        }
+        setOnClickListener {
+            onLayoutClick?.invoke(this)
         }
     }
 
@@ -246,11 +234,12 @@ open class FoldText @JvmOverloads constructor(
             val beforeTextTemp = contentString.subSequence(lastEnd, start)
             val beforeText = insertZeroWidthSpace(beforeTextTemp)
             spannableStringBuilder.append(beforeText)
-             regexList.firstOrNull {
-                 val matchText = matcher.group(regexList.indexOf(it) + 1)
-                 (matchText != null).apply {
-                it.handle(textView,matchText,spannableStringBuilder)
-            } }
+            regexList.firstOrNull {
+                val matchText = matcher.group(regexList.indexOf(it) + 1)
+                (matchText != null).apply {
+                    it.handle(textView, matchText, spannableStringBuilder)
+                }
+            }
             // 更新lastEnd
             lastEnd = end
         }
@@ -487,13 +476,13 @@ open class FoldText @JvmOverloads constructor(
         }
     }
 
-    fun setButtonExpandIcon(@DrawableRes buttonExpandIcon: Int): FoldText {
+    fun setButtonExpandIcon(buttonExpandIcon: Int): FoldText {
         return this.apply {
             this.buttonExpandIcon = buttonExpandIcon
         }
     }
 
-    fun setButtonFoldIcon(@DrawableRes buttonFoldIcon: Int): FoldText {
+    fun setButtonFoldIcon(buttonFoldIcon: Int): FoldText {
         return this.apply {
             this.buttonFoldIcon = buttonFoldIcon
         }
@@ -530,7 +519,7 @@ open class FoldText @JvmOverloads constructor(
         }
     }
 
-    fun setButtonEllipsizeIcon(@DrawableRes buttonEllipsizeIcon: Int): FoldText {
+    fun setButtonEllipsizeIcon(buttonEllipsizeIcon: Int): FoldText {
         return this.apply {
             this.buttonEllipsizeIcon = buttonEllipsizeIcon
         }

@@ -11,7 +11,6 @@ import android.text.style.ReplacementSpan
 import android.text.style.SuperscriptSpan
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.widget.TextView
 
 fun String.toColor() = Color.parseColor(this)

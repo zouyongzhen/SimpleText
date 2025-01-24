@@ -7,7 +7,7 @@ import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.util.AttributeSet
 import android.view.View
-import androidx.appcompat.widget.AppCompatTextView
+import android.widget.TextView
 import zyz.hero.simple_text.utils.TextViewTouchListener
 import zyz.hero.simple_text.utils.charSequencePrefixConcat
 
@@ -18,7 +18,7 @@ import zyz.hero.simple_text.utils.charSequencePrefixConcat
  */
 class MultiClickTextView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
-) : AppCompatTextView(context, attrs) {
+) : TextView(context, attrs) {
     data class TextData(
         //前缀
         var prefix: CharSequence? = SpannableStringBuilder(),
