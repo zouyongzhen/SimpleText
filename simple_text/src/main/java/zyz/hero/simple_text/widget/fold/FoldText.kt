@@ -21,6 +21,7 @@ import zyz.hero.simple_text.R
 import zyz.hero.simple_text.utils.TextViewTouchListener
 import zyz.hero.simple_text.utils.dp
 import zyz.hero.simple_text.utils.sp
+import zyz.hero.simple_text.widget.fold.handler.BaseHandler
 import java.text.BreakIterator
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -50,7 +51,7 @@ open class FoldText @JvmOverloads constructor(
     }
 
 
-    protected open var regexList = mutableListOf<String>()
+    protected open var regexList = mutableListOf<BaseHandler>()
 
     //整体布局的点击事件（不包含引用和按钮图标或文字）
     private var onLayoutClick: ((FoldText) -> Unit)? = null
@@ -229,7 +230,10 @@ open class FoldText @JvmOverloads constructor(
     }
 
     protected open fun handleSpan(contentString: CharSequence): SpannableStringBuilder {
-        val pattern: Pattern = Pattern.compile(regexList.joinToString("|"))
+        if (regexList.isEmpty()) {
+            return SpannableStringBuilder(contentString)
+        }
+        val pattern: Pattern = Pattern.compile(regexList.joinToString("|") { it.regex })
         val matcher: Matcher = pattern.matcher(contentString)
         var lastEnd = 0
         // 创建SpannableStringBuilder来构建新的文本
@@ -242,7 +246,11 @@ open class FoldText @JvmOverloads constructor(
             val beforeTextTemp = contentString.subSequence(lastEnd, start)
             val beforeText = insertZeroWidthSpace(beforeTextTemp)
             spannableStringBuilder.append(beforeText)
-            handleMatcher(matcher, spannableStringBuilder)
+             regexList.firstOrNull {
+                 val matchText = matcher.group(regexList.indexOf(it) + 1)
+                 (matchText != null).apply {
+                it.handle(textView,matchText,spannableStringBuilder)
+            } }
             // 更新lastEnd
             lastEnd = end
         }
@@ -437,81 +445,125 @@ open class FoldText @JvmOverloads constructor(
     }
 
 
-
-    fun setOnLayoutClickListener(onTextViewClick: (FoldText) -> Unit) {
-        this.onLayoutClick = onTextViewClick
+    fun setOnLayoutClickListener(onTextViewClick: (FoldText) -> Unit): FoldText {
+        return this.apply {
+            this.onLayoutClick = onTextViewClick
+        }
     }
 
-    fun setOnButtonClickListener(onButtonClick: (FoldText) -> Unit) {
-        this.onButtonClick = onButtonClick
+    fun setOnButtonClickListener(onButtonClick: (FoldText) -> Unit): FoldText {
+        return this.apply {
+            this.onButtonClick = onButtonClick
+        }
     }
 
-    fun setButtonTextSize(buttonTextSizePx: Float) {
-        this.buttonTextSize = buttonTextSizePx
+    fun setButtonTextSize(buttonTextSizePx: Float): FoldText {
+        return this.apply {
+            this.buttonTextSize = buttonTextSizePx
+        }
     }
 
-    fun setQuoteSizeFraction(contentTextSizePx: Float) {
-        this.contentTextSize = contentTextSizePx
+    fun setQuoteSizeFraction(contentTextSizePx: Float): FoldText {
+        return this.apply {
+            this.contentTextSize = contentTextSizePx
+        }
     }
 
-    fun setButtonTextColor(buttonTextColor: Int) {
-        this.buttonTextColor = buttonTextColor
+    fun setButtonTextColor(buttonTextColor: Int): FoldText {
+        return this.apply {
+            this.buttonTextColor = buttonTextColor
+        }
     }
 
-    fun setTextColor(textColor: Int) {
-        this.textColor = textColor
+    fun setTextColor(textColor: Int): FoldText {
+        return this.apply {
+            this.textColor = textColor
+        }
     }
 
-    fun setShowMode(showMode: Int) {
-        this.showMode = showMode
+    fun setShowMode(showMode: Int): FoldText {
+        return this.apply {
+            this.showMode = showMode
+        }
     }
 
-    fun setButtonExpandIcon(@DrawableRes buttonExpandIcon: Int) {
-        this.buttonExpandIcon = buttonExpandIcon
+    fun setButtonExpandIcon(@DrawableRes buttonExpandIcon: Int): FoldText {
+        return this.apply {
+            this.buttonExpandIcon = buttonExpandIcon
+        }
     }
 
-    fun setButtonFoldIcon(@DrawableRes buttonFoldIcon: Int) {
-        this.buttonFoldIcon = buttonFoldIcon
+    fun setButtonFoldIcon(@DrawableRes buttonFoldIcon: Int): FoldText {
+        return this.apply {
+            this.buttonFoldIcon = buttonFoldIcon
+        }
     }
 
-    fun setButtonEllipsizeText(buttonEllipsizeText: CharSequence) {
-        this.buttonEllipsizeText = buttonEllipsizeText
+    fun setButtonEllipsizeText(buttonEllipsizeText: CharSequence): FoldText {
+        return this.apply {
+            this.buttonEllipsizeText = buttonEllipsizeText
+        }
     }
 
-    fun setButtonExpandText(buttonExpandText: CharSequence) {
-        this.buttonExpandText = buttonExpandText
+    fun setButtonExpandText(buttonExpandText: CharSequence): FoldText {
+        return this.apply {
+            this.buttonExpandText = buttonExpandText
+        }
     }
 
-    fun setButtonFoldText(buttonFoldText: CharSequence) {
-        this.buttonFoldText = buttonFoldText
+    fun setButtonFoldText(buttonFoldText: CharSequence): FoldText {
+        return this.apply {
+            this.buttonFoldText = buttonFoldText
+        }
     }
 
-    fun setButtonMarginRight(buttonMarginRightPx: Int) {
-        this.buttonMarginRight = buttonMarginRightPx
+    fun setButtonMarginRight(buttonMarginRightPx: Int): FoldText {
+        return this.apply {
+            this.buttonMarginRight = buttonMarginRightPx
+        }
     }
 
-    fun setButtonMarginLeft(buttonMarginLeftPx: Int) {
-        this.buttonMarginLeft = buttonMarginLeftPx
+    fun setButtonMarginLeft(buttonMarginLeftPx: Int): FoldText {
+
+        return this.apply {
+            this.buttonMarginLeft = buttonMarginLeftPx
+        }
     }
 
-    fun setButtonEllipsizeIcon(@DrawableRes buttonEllipsizeIcon: Int) {
-        this.buttonEllipsizeIcon = buttonEllipsizeIcon
+    fun setButtonEllipsizeIcon(@DrawableRes buttonEllipsizeIcon: Int): FoldText {
+        return this.apply {
+            this.buttonEllipsizeIcon = buttonEllipsizeIcon
+        }
     }
 
-    fun setLimitLineCount(limitLineCount: Int) {
-        this.limitLineCount = limitLineCount
+    fun setLimitLineCount(limitLineCount: Int): FoldText {
+        return this.apply {
+            this.limitLineCount = limitLineCount
+        }
     }
 
-    fun setTextLineSpacingMultiplier(textLineSpacingMultiplier: Float) {
-        this.textLineSpacingMultiplier = textLineSpacingMultiplier
+    fun setTextLineSpacingMultiplier(textLineSpacingMultiplier: Float): FoldText {
+        return this.apply {
+            this.textLineSpacingMultiplier = textLineSpacingMultiplier
+        }
     }
 
-    fun setTextLineSpacing(textLineSpacing: Float) {
-        this.textLineSpacing = textLineSpacing
+    fun setTextLineSpacing(textLineSpacing: Float): FoldText {
+        return this.apply {
+            this.textLineSpacing = textLineSpacing
+        }
     }
 
-    fun setFold(isFold: Boolean) {
-        this.isFold = isFold
+    fun setFold(isFold: Boolean): FoldText {
+        return this.apply {
+            this.isFold = isFold
+        }
+    }
+
+    fun setHandler(vararg handlers: BaseHandler): FoldText {
+        return this.apply {
+            regexList.addAll(handlers)
+        }
     }
 
 }
