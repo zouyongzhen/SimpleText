@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FoldText">
+        <attr name="buttonEllipsizeIcon" format="reference" />
+        <attr name="buttonEllipsizeText" format="string|reference" />
+        <attr name="limitLineCount" format="integer|reference" />
+        <attr name="buttonFoldText" format="string|reference" />
+        <attr name="buttonExpandText" format="string|reference" />
+        <attr name="buttonFoldIcon" format="reference" />
+        <attr name="buttonExpandIcon" format="reference" />
+        <attr name="buttonMarginRight" format="dimension|reference" />
+        <attr name="buttonMarginLeft" format="dimension|reference" />
+        <attr name="textColor" format="color|reference" />
+        <attr name="textLineSpacingMultiplier" format="float" />
+        <attr name="textLineSpacing" format="float" />
+        <attr name="buttonTextColor" format="color|reference" />
+        <attr name="contentTextSize" format="dimension" />
+        <attr name="buttonTextSize" format="dimension" />
+        <attr name="supportEmoji" format="boolean" />
+        <attr name="showMode">
+            <enum name="showModeUnfoldWithButtonIcon" value="1" />
+            <enum name="showModeUnfoldWithButtonText" value="2" />
+            <enum name="showModeFoldWithButtonIcon" value="3" />
+            <enum name="showModeFoldWithButtonText" value="4" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="QuoteText">
+        <attr name="quoteSizeFraction" format="float" />
+        <attr name="quoteColor" format="color|reference" />
+    </declare-styleable>
+    <declare-styleable name="FoldTextWithQuoteAndHighLight">
+        <attr name="highLightColor" format="color|reference" />
+    </declare-styleable>
+</resources>
