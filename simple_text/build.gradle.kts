@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.mavenPublish)
 }
 
 android {
@@ -18,9 +19,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    lintOptions {
-        isAbortOnError =  false
-    }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -28,4 +27,17 @@ android {
 
 dependencies {
     implementation(libs.material)
+}
+group = "com.github.zouyongzhen"
+version = "1.0-alpha"
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                groupId = (group.toString())
+                artifactId = "SimpleText"
+                version = version
+            }
+        }
+    }
 }
