@@ -22,7 +22,7 @@ class MultiClickTextView @JvmOverloads constructor(
     data class TextData(
         //前缀
         var prefix: CharSequence? = SpannableStringBuilder(),
-        //中缀
+        //中缀，多次使用 不能使用同一个对象。
         var infix: () -> CharSequence? = { SpannableStringBuilder() },
         //后缀
         var suffix: CharSequence? = SpannableStringBuilder(),

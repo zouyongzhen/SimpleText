@@ -8,7 +8,7 @@ import android.net.Uri
 
 /**
  *这个类用户获取context，这个context其实就是application，但是这里调用onCreate方法时，application还没有走onCreate方法
- *onCreate方法走在application-onCreate方法之前。
+ *ContentProvider onCreate方法走在Application onCreate方法之前。
  */
 class ContextContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
