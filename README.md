@@ -1,9 +1,22 @@
 ## Feature
 * FoldText：支持展开/收起、省略的文本展示控件。支持富文本处理逻辑扩展，内置高亮及数字引用处理逻辑。
 * MultiClickTextView：处理一个文本展示列表数据，列表项需要响应点击
-* 更多文本控件
+* 更多工具...后续补充
 ## 集成方式
-
+```groovy
+	dependencyResolutionManagement {
+		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+		repositories {
+			mavenCentral()
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+```groovy
+	dependencies {
+	        implementation 'com.github.zouyongzhen:SimpleText:last-release'
+	}
+```
 ## 效果图
 ![效果图](%E6%95%88%E6%9E%9C%E5%9B%BE.gif)
 ## 示例代码
