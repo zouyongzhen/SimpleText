@@ -1,4 +1,5 @@
 ## Feature
+[![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16) [![](https://jitpack.io/v/zouyongzhen/SimpleText.svg)](https://jitpack.io/#zouyongzhen/SimpleText)
 * FoldText：支持展开/收起、省略的文本展示控件。支持富文本处理逻辑扩展，内置高亮及数字引用处理逻辑。
 * MultiClickTextView：处理一个文本展示列表数据，列表项需要响应点击
 * 更多工具...后续补充
