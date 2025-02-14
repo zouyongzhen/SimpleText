@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FoldText">
+        <attr name="showMode">
+            <enum name="showModeUnfoldWithButtonIcon" value="1" />
+            <enum name="showModeUnfoldWithButtonText" value="2" />
+            <enum name="showModeFoldWithButtonIcon" value="3" />
+            <enum name="showModeFoldWithButtonText" value="4" />
+        </attr>
+        <attr name="limitLineCount" format="integer|reference" />
+        <attr name="supportEmoji" format="boolean" />
+        <attr name="contentTextColor" format="color|reference" />
+        <attr name="contentTextSize" format="dimension" />
+        <attr name="contentTextLineSpacingMultiplier" format="float" />
+        <attr name="contentTextLineSpacing" format="float" />
+
+        <attr name="buttonTextSize" format="dimension" />
+        <attr name="buttonTextColor" format="color|reference" />
+        <attr name="buttonEllipsizeIcon" format="reference" />
+        <attr name="buttonEllipsizeText" format="string|reference" />
+        <attr name="buttonFoldText" format="string|reference" />
+        <attr name="buttonExpandText" format="string|reference" />
+        <attr name="buttonFoldIcon" format="reference" />
+        <attr name="buttonExpandIcon" format="reference" />
+        <attr name="buttonMarginRight" format="dimension|reference" />
+        <attr name="buttonMarginLeft" format="dimension|reference" />
+
+    </declare-styleable>
+</resources>
